@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TN Gov Grievance Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Roboto', Arial, sans-serif; 
+            background: linear-gradient(135deg, #FF9933 0%, #FFFFFF 50%, #128807 100%); 
+            color: #333; 
+            margin: 0; 
+            padding: 0; 
+            animation: fadeIn 1s ease-in; 
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        header { 
+            background: linear-gradient(90deg, #FF9933, #FFCC99); 
+            color: #FFFFFF; 
+            padding: 30px; 
+            text-align: center; 
+            border-bottom: 5px solid #128807; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2); 
+            position: relative; 
+        }
+        header img { width: 120px; height: auto; border-radius: 50%; box-shadow: 0 0 15px rgba(255,255,255,0.5); }
+        .container { 
+            max-width: 900px; 
+            margin: 30px auto; 
+            padding: 30px; 
+            background: rgba(255,255,255,0.95); 
+            border-radius: 15px; 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15); 
+            border: 3px solid #FF9933; 
+            backdrop-filter: blur(10px); 
+            animation: slideUp 0.8s ease-out; 
+        }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        form { display: flex; flex-direction: column; gap: 15px; }
+        label { margin-top: 10px; font-weight: 700; color: #128807; }
+        input, textarea, button { 
+            padding: 15px; 
+            margin-top: 5px; 
+            border: 2px solid #ccc; 
+            border-radius: 10px; 
+            font-size: 16px; 
+            transition: all 0.3s ease; 
+        }
+        input:focus, textarea:focus { border-color: #FF9933; box-shadow: 0 0 10px rgba(255,153,51,0.5); outline: none; }
+        button { 
+            background: linear-gradient(45deg, #128807, #0F6B3A); 
+            color: #FFFFFF; 
+            cursor: pointer; 
+            font-weight: 700; 
+            border: none; 
+            min-height: 50px; 
+            transition: transform 0.2s, box-shadow 0.2s; 
+        }
+        button:hover, button:active { 
+            transform: scale(1.05); 
+            box-shadow: 0 5px 15px rgba(18,136,7,0.4); 
+        }
+        .urgent { color: #FF9933; font-weight: bold; text-shadow: 0 0 5px rgba(255,153,51,0.8); }
+        #tracking { margin-top: 30px; border-top: 2px solid #128807; padding-top: 20px; }
+        #status { 
+            padding: 15px; 
+            background: linear-gradient(45deg, #E8F5E8, #D4EDDA); 
+            border: 2px solid #128807; 
+            border-radius: 10px; 
+            animation: glow 2s infinite alternate; 
+        }
+        @keyframes glow { from { box-shadow: 0 0 5px #128807; } to { box-shadow: 0 0 20px #128807; } }
+        footer { 
+            text-align: center; 
+            padding: 20px; 
+            background: linear-gradient(90deg, #FF9933, #128807); 
+            color: #FFFFFF; 
+            font-size: 0.9em; 
+            margin-top: 30px; 
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.2); 
+        }
+        footer a { color: #FFFFFF; text-decoration: none; font-weight: 700; transition: color 0.3s; }
+        footer a:hover { color: #FFCC99; }
+        .file-preview { margin-top: 10px; font-size: 0.9em; color: #666; background: #F9F9F9; padding: 10px; border-radius: 8px; }
+        nav { position: absolute; top: 10px; right: 20px; }
+        nav a { color: #FFFFFF; margin: 0 10px; text-decoration: none; font-weight: 700; transition: color 0.3s; }
+        nav a:hover { color: #FFCC99; }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="https://www.tn.gov.in/" target="_blank">🏛️ TN Gov Home</a>
+            <a href="https://www.india.gov.in/" target="_blank">🇮🇳 India Portal</a>
+            <a href="#tracking">🔍 Track Grievance</a>
+        </nav>
+        <img src="https://example.com/tn-emblem.png" alt="Tamil Nadu State Emblem">
+        <h1>📄 Tamil Nadu Government Grievance Portal</h1>
+        <p>Vanakkam! 🚀 Submit and track grievances under Digital India initiative. Urgent cases prioritized for swift resolution.</p>
+    </header>
+
+    <div class="container">
+        <h2>Submit Your Grievance 📝</h2>
+        <p>Help us serve Tamil Nadu better. Categories include Public Safety, PDS (Public Distribution System), TNEB (Electricity), or Corruption. Attach files for evidence! 📎</p>
+        <form id="grievanceForm">
+            <label for="name">Your Name:</label>
+            <input type="text" id="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+
+            <label for="category">Category (e.g., Public Safety, PDS, TNEB):</label>
+            <input type="text" id="category" required>
+
+            <label for="description">Description (Include details for faster resolution):</label>
+            <textarea id="description" rows="5" required></textarea>
+
+            <label for="files">Attach Files (Images/PDFs only, max 5MB each): 📄</label>
+            <input type="file" id="files" accept=".jpg,.jpeg,.png,.pdf" multiple>
+
+            <div id="filePreview" class="file-preview"></div>
+
+            <button type="submit">Submit Grievance ✅</button>
+        </form>
+
+        <div id="classificationResult" style="margin-top: 20px;"></div>
+
+        <div id="tracking">
+            <h2>Track Your Grievance 🔍</h2>
+            <label for="trackingId">Enter Tracking ID:</label>
+            <input type="text" id="trackingId">
+            <button onclick="trackGrievance()">Track 📊</button>
+            <div id="status"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Powered by Tamil Nadu Government 🇮🇳. Data protected under RTI Act and Indian Privacy Laws. For emergencies, contact local authorities 🚨.</p>
+        <p><a href="https://www.mygov.in/" target="_blank">Visit MyGov for More</a> | <a href="mailto:help@tn.gov.in">Contact Us</a></p>
+    </footer>
+
+    <script>
+        // Mock database using localStorage (simulates TN Gov systems)
+        let grievances = JSON.parse(localStorage.getItem('tnGrievances')) || [];
+        let nextId = grievances.length + 1;
+
+        // File preview handler
+        document.getElementById('files').addEventListener('change', function(e) {
+            const files = e.target.files;
+            const previewDiv = document.getElementById('filePreview');
+            previewDiv.innerHTML = '';
+            if (files.length > 0) {
+                previewDiv.innerHTML = '<p>📎 Selected files:</p><ul>';
+                for (let file of files) {
+                    previewDiv.innerHTML += `<li>${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)</li>`;
+                }
+                previewDiv.innerHTML += '</ul>';
+            }
+        });
+
+        // Form submission and classification
+        document.getElementById('grievanceForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const category = document.getElementById('category').value;
+            const description = document.getElementById('description').value;
+            const files = document.getElementById('files').files;
+
+            // Simulate file upload
+            let fileNames = [];
+            for (let file of files) {
+                fileNames.push(file.name);
+            }
+
+            // Urgency classification
+            const urgentKeywords = ['emergency', 'safety', 'urgent', 'corruption', 'pds shortage', 'tneb failure', 'life-threatening'];
+            const isUrgent = urgentKeywords.some(keyword => description.toLowerCase().includes(keyword));
+
+            const grievance = {
+                id: nextId++,
+                name,
+                email,
+                category,
+                description,
+                files: fileNames,
+                urgent: isUrgent,
+                status: 'Submitted'
+            };
+            grievances.push(grievance);
+            localStorage.setItem('tnGrievances', JSON.stringify(grievances));
+
+            document.getElementById('classificationResult').innerHTML = 
+                `<p>✅ Grievance submitted! Tracking ID: ${grievance.id}. ${isUrgent ? '<span class="urgent">🚨 Flagged as URGENT - Prioritized under Tamil Nadu Emergency Response (within 24 hours).</span>' : 'Standard resolution under Digital India guidelines (within 7 days).'}</p>`;
+            this.reset();
+            document.getElementById('filePreview').innerHTML = '';
+        });
+
+        // Tracking function
+        function trackGrievance() {
+            const id = document.getElementById('trackingId').value;
+            const grievance = grievances.find(g => g.id == id);
+            const statusDiv = document.getElementById('status');
+            if (grievance) {
+                let filesInfo = grievance.files.length > 0 ? `<p>📎 Attached Files: ${grievance.files.join(', ')}</p>` : '';
+                statusDiv.innerHTML = `<p>📊 Status: ${grievance.status}</p><p>Category: ${grievance.category}</p><p>Urgent: ${grievance.urgent ? 'Yes (Fast-tracked) 🚀' : 'No'}</p>${filesInfo}<p>For updates, use RTI if needed.</p>`;
+            } else {
+                statusDiv.innerHTML = '<p>❌ No grievance found. Please check your ID or contact TN Helpline 📞.</p>';
+            }
+        }
+    </script>
+</body>
+</html>
