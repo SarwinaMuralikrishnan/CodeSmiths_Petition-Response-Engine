@@ -61,8 +61,9 @@ The **Petition Response Engine** addresses these issues by:
 
 ## 👩‍💻 GitHub Profile
 
-- **Sarwina M**: (https://github.com/SarwinaMuralikrishnan)
+- **Sarwina M**        :   https://github.com/SarwinaMuralikrishnan
+- **Sanjana S**        :   https://github.com/Sanjana-tech16
+- **Kamalesh M**       :   https://github.com/kamal666-rc
+- **Srinivetha S G**   :   https://github.com/srinivetha786
+- **Tharchana S**      :   https://github.com/Tharchana03
 ---
-
-## 📂 Repository Structure (Planned)
-
