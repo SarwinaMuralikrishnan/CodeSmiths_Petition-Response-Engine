@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petition Response Engine | Government of India</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --india-saffron: #FF9933;
+            --india-white: #FFFFFF;
+            --india-green: #138808;
+            --deep-navy: #001a33;
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--deep-navy);
+            /* Dark radial gradient for depth */
+            background: radial-gradient(circle at center, #003366 0%, #001a33 100%);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* THE WATERMARK: Faded and attached to the background */
+        .background-emblem {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 550px; /* Size of the background emblem */
+            height: 550px;
+            background: url('https://i.pinimg.com/736x/24/40/7f/24407fdc296f88fd3887a2260db20b57.jpg') no-repeat center;
+            background-size: contain;
+            opacity: 0.05; /* Faded out to 5% opacity */
+            z-index: 0; /* Keeps it behind everything */
+            pointer-events: none; /* Allows clicking on buttons through it */
+            filter: grayscale(100%); /* Keeps it subtle */
+        }
+
+        /* Tri-color Top Strip */
+        .top-accent {
+            height: 6px;
+            display: flex;
+            width: 100%;
+            z-index: 100;
+        }
+
+        header {
+            padding: 40px 0 20px;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .header-text h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            /* Tri-color Gradient Text */
+            background: linear-gradient(to right, var(--india-saffron), #fff, var(--india-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sub-title {
+            color: var(--india-saffron);
+            font-weight: 600;
+            letter-spacing: 8px;
+            font-size: 0.85rem;
+            margin-top: 10px;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            z-index: 10; /* Ensures buttons are above the watermark */
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            width: 340px;
+            padding: 50px 30px;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            transition: 0.4s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--india-saffron);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .card h2 {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .card p {
+            color: #bdc3c7;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: block;
+            padding: 14px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 50px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            transition: 0.3s;
+        }
+
+        .btn-public { background: linear-gradient(45deg, var(--india-green), #2ecc71); color: white; }
+        .btn-admin { background: linear-gradient(45deg, var(--india-saffron), #e67e22); color: white; }
+
+        .btn:hover {
+            transform: scale(1.05);
+            filter: brightness(1.2);
+        }
+
+        footer {
+            padding: 20px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.3);
+            background: rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-accent">
+        <div style="flex: 1; background: var(--india-saffron);"></div>
+        <div style="flex: 1; background: var(--india-white);"></div>
+        <div style="flex: 1; background: var(--india-green);"></div>
+    </div>
+
+    <div class="background-emblem"></div>
+
+    <header>
+        <div class="header-text">
+            <h1>Petition Response Engine</h1>
+            <div class="sub-title">GOVERNMENT PORTAL</div>
+        </div>
+    </header>
+
+    <main>
+        <div class="card">
+            <h2>Public Login</h2>
+            <p>File new petitions and track your grievance status online.</p>
+            <a href="login.html?type=public" class="btn btn-public">Citizen Access</a>
+        </div>
+
+        <div class="card">
+            <h2>Admin Login</h2>
+            <p>Official access for departmental review and response drafting.</p>
+            <a href="login.html?type=admin" class="btn btn-admin">Official Access</a>
+        </div>
+    </main>
+
+    <footer>
+        Digital India | National Informatics Centre (NIC) &copy; 2026
+    </footer>
+
+</body>
+</html>

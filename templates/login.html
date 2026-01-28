@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Login | Petition Response Engine</title>
+    <style>
+        :root {
+            --india-saffron: #FF9933;
+            --india-green: #138808;
+            --deep-navy: #001a33;
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at center, #003366 0%, #001a33 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 40px;
+            border-radius: 20px;
+            width: 350px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        .login-card img {
+            height: 80px;
+            margin-bottom: 20px;
+            filter: brightness(0) invert(1);
+        }
+
+        h2 { margin-bottom: 30px; letter-spacing: 1px; }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-size: 0.8rem;
+            margin-bottom: 5px;
+            color: var(--india-saffron);
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 5px;
+            color: white;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        input:focus { border-color: var(--india-saffron); }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(45deg, var(--india-saffron), var(--india-green));
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        .login-btn:hover { transform: scale(1.02); filter: brightness(1.2); }
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            color: #ccc;
+            text-decoration: none;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-card">
+    <img src="https://i.pinimg.com/736x/24/40/7f/24407fdc296f88fd3887a2260db20b57.jpg" alt="Emblem">
+    <h2 id="login-title">Secure Login</h2>
+    
+    <form id="loginForm">
+        <div class="input-group">
+            <label id="user-label">USER ID / AADHAAR</label>
+            <input type="text" placeholder="Enter credentials" required>
+        </div>
+        <div class="input-group">
+            <label>PASSWORD / PIN</label>
+            <input type="password" placeholder="••••••••" required>
+        </div>
+        
+        <button type="submit" class="login-btn">Authenticate</button>
+    </form>
+
+    <a href="index.html" class="back-link">← Back to Portal Selection</a>
+</div>
+
+<script>
+    // Simple logic to detect if we came from Admin or Public
+    const urlParams = new URLSearchParams(window.location.search);
+    const type = urlParams.get('type');
+    const title = document.getElementById('login-title');
+    const label = document.getElementById('user-label');
+
+    if (type === 'admin') {
+        title.innerText = "Officer Login";
+        label.innerText = "GOVERNMENT EMAIL / ID";
+    } else {
+        title.innerText = "Citizen Login";
+        label.innerText = "AADHAAR / MOBILE NUMBER";
+    }
+
+    // Redirect logic
+    document.getElementById('loginForm').onsubmit = function(e) {
+        e.preventDefault();
+        if (type === 'admin') {
+            window.location.href = "admin_page.html"; // Ensure this filename matches yours
+        } else {
+            window.location.href = "public_page.html"; // Ensure this filename matches yours
+        }
+    };
+</script>
+
+</body>
+</html>
