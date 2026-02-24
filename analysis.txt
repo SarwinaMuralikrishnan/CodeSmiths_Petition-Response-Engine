@@ -1,0 +1,27 @@
+Accuracy: 0.07075
+Train samples: 16000
+Test samples: 4000
+Train classes: 14
+Test classes: 14
+Missing classes in train: set()
+Test Report:
+                       precision    recall  f1-score   support
+
+            Education       0.08      0.07      0.08       317
+          Electricity       0.06      0.07      0.06       279
+          Environment       0.07      0.06      0.07       263
+Food & Civil Supplies       0.06      0.06      0.06       304
+               Health       0.06      0.07      0.07       301
+   IT & Communication       0.09      0.09      0.09       264
+               Labour       0.07      0.09      0.08       276
+            Municipal       0.08      0.07      0.08       313
+               Police       0.04      0.04      0.04       256
+              Revenue       0.06      0.05      0.05       292
+    Rural Development       0.07      0.08      0.08       285
+       Social Welfare       0.10      0.09      0.10       300
+            Transport       0.08      0.08      0.08       264
+         Water Supply       0.07      0.07      0.07       286
+
+             accuracy                           0.07      4000
+            macro avg       0.07      0.07      0.07      4000
+         weighted avg       0.07      0.07      0.07      4000

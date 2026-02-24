@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Login | Petition Response Engine</title>
+    <style>
+        :root {
+            --india-saffron: #FF9933;
+            --india-green: #138808;
+            --deep-navy: #001a33;
+        }
+
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at center, #003366 0%, #001a33 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 40px;
+            border-radius: 20px;
+            width: 350px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .login-card img {
+            height: 80px;
+            margin-bottom: 20px;
+            filter: brightness(0) invert(1);
+        }
+
+        h2 {
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-size: 0.8rem;
+            margin-bottom: 5px;
+            color: var(--india-saffron);
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            color: white;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: var(--india-saffron);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(45deg, var(--india-saffron), var(--india-green));
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        .login-btn:hover {
+            transform: scale(1.02);
+            filter: brightness(1.2);
+        }
+
+        .account-toggle {
+            margin-top: 15px;
+            font-size: 0.85rem;
+            color: #ccc;
+        }
+
+        .account-toggle span {
+            color: var(--india-saffron);
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            color: #ccc;
+            text-decoration: none;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-card">
+        <img src="https://i.pinimg.com/736x/24/40/7f/24407fdc296f88fd3887a2260db20b57.jpg" alt="Emblem">
+        <h2 id="login-title">Secure Login</h2>
+
+        <form id="loginForm">
+            <div class="input-group">
+                <label id="user-label">USER ID / AADHAAR</label>
+                <input type="text" id="useridInput" placeholder="Enter credentials" required>
+            </div>
+            <div class="input-group">
+                <label id="pin-label">PASSWORD / PIN</label>
+                <div style="position: relative;">
+                    <input type="password" id="passwordInput" placeholder="••••••••" required
+                        style="padding-right: 40px;">
+                    <span id="eyeIcon" onclick="togglePassword()"
+                        style="position: absolute; right: 12px; top: 12px; cursor: pointer; user-select: none; opacity: 0.7; transition: 0.2s;">👁️</span>
+                </div>
+            </div>
+
+            <button type="submit" id="submitBtn" class="login-btn">Authenticate</button>
+        </form>
+
+        <div class="account-toggle" id="toggleSection">
+            <span id="toggleText">New User? Sign Up Here</span>
+        </div>
+
+        <a href="/" class="back-link">← Back to Portal Selection</a>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const type = urlParams.get('type') || 'public';
+        const title = document.getElementById('login-title');
+        const label = document.getElementById('user-label');
+        const toggleSection = document.getElementById('toggleSection');
+        const toggleText = document.getElementById('toggleText');
+        const submitBtn = document.getElementById('submitBtn');
+
+        let isSignupMode = false;
+
+        if (type === 'admin') {
+            title.innerText = "Officer Login";
+            label.innerText = "GOVERNMENT EMAIL / ID";
+            toggleSection.style.display = "none";
+        } else {
+            title.innerText = "Citizen Login";
+            label.innerText = "AADHAAR / MOBILE NUMBER";
+        }
+
+        function togglePassword() {
+            const pwdInput = document.getElementById('passwordInput');
+            const eyeIcon = document.getElementById('eyeIcon');
+            if (pwdInput.type === 'password') {
+                pwdInput.type = 'text';
+                eyeIcon.style.opacity = "1";
+            } else {
+                pwdInput.type = 'password';
+                eyeIcon.style.opacity = "0.7";
+            }
+        }
+
+        toggleText.addEventListener('click', () => {
+            isSignupMode = !isSignupMode;
+            if (isSignupMode) {
+                title.innerText = "Citizen Registration";
+                submitBtn.innerText = "Sign Up";
+                toggleText.innerHTML = "Already registered? <b>Login Here</b>";
+            } else {
+                title.innerText = "Citizen Login";
+                submitBtn.innerText = "Authenticate";
+                toggleText.innerHTML = "New User? <b>Sign Up Here</b>";
+            }
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const userid = document.getElementById('useridInput').value;
+            const password = document.getElementById('passwordInput').value;
+            const endpoint = isSignupMode ? '/api/signup' : '/api/login';
+
+            try {
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ type: type, userid: userid, password: password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    if (isSignupMode) {
+                        alert("Registration successful! You can now log in.");
+                        toggleText.click();
+                        document.getElementById('passwordInput').value = "";
+                    } else {
+                        window.location.href = data.redirect;
+                    }
+                } else {
+                    alert((isSignupMode ? "Signup Failed: " : "Login Failed: ") + (data.message || "Invalid credentials"));
+                }
+            } catch (error) {
+                console.error("Authentication Error:", error);
+                alert("Error communicating with authentication server.");
+            }
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TN Gov Grievance Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background: linear-gradient(135deg, #FF9933 0%, #FFFFFF 50%, #128807 100%);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        header {
+            background: linear-gradient(90deg, #FF9933, #FFCC99);
+            color: #FFFFFF;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 5px solid #128807;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        header img {
+            width: 100px;
+            height: auto;
+            border-radius: 50%;
+            background: white;
+            padding: 5px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            border: 3px solid #FF9933;
+            backdrop-filter: blur(10px);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            margin-top: 10px;
+            font-weight: 700;
+            color: #128807;
+        }
+
+        input,
+        textarea,
+        button,
+        select {
+            padding: 15px;
+            margin-top: 5px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            background: linear-gradient(45deg, #128807, #0F6B3A);
+            color: #FFFFFF;
+            cursor: pointer;
+            font-weight: 700;
+            border: none;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.02);
+            background: #0F6B3A;
+        }
+
+        .urgent {
+            color: #d9534f;
+            font-weight: bold;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        #status {
+            padding: 15px;
+            margin-top: 10px;
+            background: #f8f9fa;
+            border: 2px solid #128807;
+            border-radius: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #333;
+            color: #FFFFFF;
+            margin-top: 30px;
+        }
+
+        nav {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+
+        nav a {
+            color: #FFFFFF;
+            margin: 0 10px;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+
+        #langToggle {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #128807;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .sync-pulse {
+            animation: pulse 2s infinite;
+            color: #128807;
+            font-weight: bold;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.4;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .analytics {
+            background: #f0f4f8;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 25px;
+            border-left: 5px solid #FF9933;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <button id="langToggle" onclick="toggleLanguage()">தமிழ் / English</button>
+
+        <nav>
+            <a href="https://www.tn.gov.in/" target="_blank">🏛️ TN Gov</a>
+            <a href="https://www.india.gov.in/" target="_blank">🇮🇳 India Portal</a>
+            <a href="/logout"
+                style="background: #d9534f; padding: 5px 10px; border-radius: 5px; font-weight: bold; cursor: pointer;">🚪
+                Logout</a>
+        </nav>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/81/TamilNadu_Logo.svg" alt="TN Logo">
+        <h1 id="title">Tamil Nadu Grievance Portal</h1>
+        <p id="subtitle">Digitalizing Public Service for a Better Tomorrow.</p>
+    </header>
+
+    <div class="container">
+        <div class="analytics">
+            <h3 id="statsTitle">Portal Statistics 📊</h3>
+            <p id="statsDisplay">Total Grievances: 0 | Resolved: 0</p>
+            <p id="syncMsg" style="font-size: 12px; color: #666;">Status: Connected locally</p>
+            <button onclick="simulateSync()"
+                style="font-size: 11px; width: auto; padding: 5px 10px; background: #555;">🔄 Sync with Gov
+                Data</button>
+        </div>
+
+        <h2 id="submitTitle">Submit Your Grievance 📝</h2>
+        <form id="grievanceForm">
+            <label id="nameLabel">Full Name:</label>
+            <input type="text" id="name" placeholder="Enter your name" required>
+
+            <label id="emailLabel">Email Address:</label>
+            <input type="email" id="email" placeholder="example@mail.com" required>
+
+            <label id="categoryLabel">Category:</label>
+            <select id="category">
+                <option value="General">General</option>
+                <option value="Agriculture">Agriculture</option>
+                <option value="AnimalHusbandry">Animal Husbandry</option>
+                <option value="BackwardClassesWelfare">Backward Classes Welfare</option>
+                <option value="CommercialTaxes">Commercial Taxes</option>
+                <option value="Cooperation">Cooperation</option>
+                <option value="Education">Education</option>
+                <option value="Energy">Energy</option>
+                <option value="EnvironmentForests">Environment & Forests</option>
+                <option value="Finance">Finance</option>
+                <option value="FoodCivilSupplies">Food & Civil Supplies</option>
+                <option value="HealthFamilyWelfare">Health & Family Welfare</option>
+                <option value="HighwaysMinorPorts">Highways & Minor Ports</option>
+                <option value="HomeProhibitionExcise">Home, Prohibition & Excise</option>
+                <option value="HousingUrbanDevelopment">Housing & Urban Development</option>
+                <option value="Industries">Industries</option>
+                <option value="InformationTechnology">Information Technology</option>
+                <option value="LabourEmployment">Labour & Employment</option>
+                <option value="Law">Law</option>
+                <option value="MSME">MSME</option>
+                <option value="Public">Public</option>
+                <option value="PlanningDevelopment">Planning & Development</option>
+                <option value="PublicWorks">Public Works</option>
+                <option value="Revenue">Revenue</option>
+                <option value="RuralDevelopment">Rural Development</option>
+                <option value="SchoolEducation">School Education</option>
+                <option value="SocialWelfare">Social Welfare</option>
+                <option value="Tourism">Tourism</option>
+                <option value="Transport">Transport</option>
+                <option value="WaterResources">Water Resources</option>
+                <option value="YouthSports">Youth & Sports</option>
+                <option value="TamilDevelopment">Tamil Development</option>
+                <option value="ScienceTechnology">Science & Technology</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <label id="descLabel">Grievance Description:</label>
+            <textarea id="description" rows="4" placeholder="AI will categorize this automatically..."
+                required></textarea>
+
+            <label id="captchaLabel">Security Check:</label>
+            <div style="display: flex; align-items: center; gap: 10px; margin-top: 5px;">
+                <canvas id="captchaCanvas" width="150" height="40"
+                    style="border: 2px solid #128807; border-radius: 5px; background: #f0f0f0; cursor: pointer;"
+                    onclick="generateCaptcha()" title="Click to refresh"></canvas>
+                <input type="text" id="captcha" placeholder="Enter code" required maxlength="6"
+                    style="flex: 1; padding: 10px;">
+                <button type="button" onclick="generateCaptcha()"
+                    style="width: auto; padding: 10px 15px; font-size: 12px; background: #555; margin: 0;">🔄</button>
+            </div>
+
+            <button type="submit" id="submitBtn">Submit Securely ✅</button>
+        </form>
+
+        <div id="tracking" style="margin-top: 40px;">
+            <h2 id="trackTitle">Track Grievance 🔍</h2>
+            <input type="text" id="trackingId" placeholder="Enter ID (e.g., TN-1234)">
+            <button onclick="trackGrievance()" id="trackBtn" style="width: 100%;">Track Status</button>
+            <div id="status">Status will appear here...</div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Government of Tamil Nadu. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const DB_KEY = 'tn_db_final';
+        let grievances = JSON.parse(localStorage.getItem(DB_KEY)) || [];
+        let isTamil = false;
+        let captchaCode = '';
+
+        function generateCaptcha() {
+            const canvas = document.getElementById('captchaCanvas');
+            const ctx = canvas.getContext('2d');
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789';
+            captchaCode = '';
+            for (let i = 0; i < 6; i++) {
+                captchaCode += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+
+            for (let i = 0; i < 50; i++) {
+                ctx.fillStyle = `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.1)`;
+                ctx.fillRect(Math.random() * canvas.width, Math.random() * canvas.height, 2, 2);
+            }
+
+            for (let i = 0; i < 5; i++) {
+                ctx.strokeStyle = `rgba(${Math.random() * 200}, ${Math.random() * 200}, ${Math.random() * 200}, 0.3)`;
+                ctx.lineWidth = Math.random() * 2 + 1;
+                ctx.beginPath();
+                ctx.moveTo(Math.random() * canvas.width, Math.random() * canvas.height);
+                ctx.lineTo(Math.random() * canvas.width, Math.random() * canvas.height);
+                ctx.stroke();
+            }
+
+            ctx.font = 'bold 24px Arial';
+            for (let i = 0; i < captchaCode.length; i++) {
+                ctx.save();
+
+                const x = 15 + i * 21;
+                const y = 25 + Math.random() * 6 - 3;
+                const rotation = (Math.random() - 0.5) * 0.3;
+
+                ctx.translate(x, y);
+                ctx.rotate(rotation);
+
+                const r = Math.floor(Math.random() * 100);
+                const g = Math.floor(Math.random() * 100);
+                const b = Math.floor(Math.random() * 100);
+                ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+
+                ctx.shadowColor = 'rgba(0,0,0,0.3)';
+                ctx.shadowBlur = 2;
+                ctx.shadowOffsetX = 1;
+                ctx.shadowOffsetY = 1;
+                ctx.fillText(captchaCode[i], 0, 0);
+
+                ctx.restore();
+            }
+
+            for (let i = 0; i < 30; i++) {
+                ctx.fillStyle = `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.2)`;
+                ctx.fillRect(Math.random() * canvas.width, Math.random() * canvas.height, 1, 1);
+            }
+
+            document.getElementById('captcha').value = '';
+        }
+
+        const translations = {
+            en: {
+                title: "Tamil Nadu Grievance Portal",
+                subtitle: "Digitalizing Public Service for a Better Tomorrow.",
+                statsTitle: "Portal Statistics 📊",
+                syncBtn: "🔄 Sync with Gov Data",
+                submitTitle: "Submit Your Grievance 📝",
+                nameLabel: "Full Name:",
+                nameHolder: "Enter your name",
+                emailLabel: "Email Address:",
+                emailHolder: "example@mail.com",
+                categoryLabel: "Category:",
+                descLabel: "Grievance Description:",
+                descHolder: "AI will categorize this automatically...",
+                captchaLabel: "Security Check:",
+                captchaHolder: "Enter code",
+                submitBtn: "Submit Securely ✅",
+                trackTitle: "Track Grievance 🔍",
+                trackHolder: "Enter ID (e.g., TN-1234)",
+                trackBtn: "Track Status",
+                langToggle: "தமிழ் / English"
+            },
+            ta: {
+                title: "தமிழ்நாடு அரசு புகார் தளம்",
+                subtitle: "சிறந்த நாளைக்காக பொது சேவையை டிஜிட்டல் மயமாக்குதல்.",
+                statsTitle: "புள்ளிவிவரங்கள் 📊",
+                syncBtn: "🔄 தரவை ஒத்திசைக்கவும்",
+                submitTitle: "உங்கள் மனுவைச் சமர்ப்பிக்கவும் 📝",
+                nameLabel: "முழு பெயர்:",
+                nameHolder: "உங்கள் பெயரை உள்ளிடவும்",
+                emailLabel: "மின்னஞ்சல்:",
+                emailHolder: "உதாரணம்@mail.com",
+                categoryLabel: "துறை:",
+                descLabel: "மனுவின் விளக்கம்:",
+                descHolder: "AI இதை தானாகவே வகைப்படுத்தும்...",
+                captchaLabel: "பாதுகாப்பு குறியீடு:",
+                captchaHolder: "குறியீட்டை உள்ளிடவும்",
+                submitBtn: "சமர்ப்பிக்கவும் ✅",
+                trackTitle: "மனு கண்காணிக்க 🔍",
+                trackHolder: "ஐடியை உள்ளிடவும் (எ.கா. TN-1234)",
+                trackBtn: "நிலை அறிய",
+                langToggle: "English / தமிழ்"
+            }
+        };
+
+        function toggleLanguage() {
+            isTamil = !isTamil;
+            const t = isTamil ? translations.ta : translations.en;
+
+            document.getElementById('title').innerText = t.title;
+            document.getElementById('subtitle').innerText = t.subtitle;
+            document.getElementById('statsTitle').innerText = t.statsTitle;
+            document.querySelector('.analytics button').innerText = t.syncBtn;
+
+            document.getElementById('submitTitle').innerText = t.submitTitle;
+            document.getElementById('nameLabel').innerText = t.nameLabel;
+            document.getElementById('name').placeholder = t.nameHolder;
+            document.getElementById('emailLabel').innerText = t.emailLabel;
+            document.getElementById('email').placeholder = t.emailHolder;
+            document.getElementById('categoryLabel').innerText = t.categoryLabel;
+            document.getElementById('descLabel').innerText = t.descLabel;
+            document.getElementById('description').placeholder = t.descHolder;
+            document.getElementById('captchaLabel').innerText = t.captchaLabel;
+            document.getElementById('captcha').placeholder = t.captchaHolder;
+            document.getElementById('submitBtn').innerText = t.submitBtn;
+
+            document.getElementById('trackTitle').innerText = t.trackTitle;
+            document.getElementById('trackingId').placeholder = t.trackHolder;
+            document.getElementById('trackBtn').innerText = t.trackBtn;
+
+            document.getElementById('langToggle').innerText = t.langToggle;
+
+            updateStats();
+        }
+
+        function aiClassify(text) {
+            const desc = text.toLowerCase();
+            if (desc.includes('power') || desc.includes('current') || desc.includes('tneb')) return "TNEB";
+            if (desc.includes('ration') || desc.includes('pds') || desc.includes('rice')) return "PDS";
+            if (desc.includes('water') || desc.includes('pipe') || desc.includes('leak')) return "Water";
+            if (desc.includes('police') || desc.includes('safety') || desc.includes('crime')) return "Safety";
+            return "General";
+        }
+
+        function simulateSync() {
+            const msg = document.getElementById('syncMsg');
+            msg.innerHTML = '<span class="sync-pulse">Fetching updates from Central Server...</span>';
+            setTimeout(() => {
+                msg.innerText = "✅ Synced with TN Gov Portal: " + new Date().toLocaleTimeString();
+                updateStats();
+            }, 1500);
+        }
+
+        document.getElementById('grievanceForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const userAnswer = document.getElementById('captcha').value;
+            if (userAnswer !== captchaCode) {
+                alert(isTamil ? "தவறான பாதுகாப்பு குறியீடு! மீண்டும் முயற்சிக்கவும்." : "Wrong CAPTCHA code! Please try again.");
+                generateCaptcha();
+                return;
+            }
+
+            const desc = document.getElementById('description').value;
+            const selectedCategory = document.getElementById('category').value;
+
+            let assignedDept = selectedCategory;
+
+            if (selectedCategory === "General") {
+                try {
+                    const res = await fetch('/predict', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ description: desc })
+                    });
+                    const data = await res.json();
+                    assignedDept = data.department;
+                } catch (error) {
+                    console.error("Backend AI failed, falling back to local fallback:", error);
+                    assignedDept = aiClassify(desc);
+                }
+            }
+
+            const id = "TN-" + Math.floor(1000 + Math.random() * 9000);
+
+            const newEntry = {
+                id: id,
+                name: document.getElementById('name').value,
+                description: desc,
+                dept: assignedDept,
+                status: "Under Review",
+                date: new Date().toLocaleDateString()
+            };
+
+            grievances.push(newEntry);
+            localStorage.setItem(DB_KEY, JSON.stringify(grievances));
+
+            alert(isTamil ? "சமர்ப்பிக்கப்பட்டது! உங்கள் ஐடி: " + id : "Success! Your ID is: " + id);
+            this.reset();
+            generateCaptcha();
+            updateStats();
+        });
+
+        function trackGrievance() {
+            const db = JSON.parse(localStorage.getItem(DB_KEY)) || [];
+            const id = document.getElementById('trackingId').value.toUpperCase();
+            const found = db.find(g => g.id === id);
+            const statusBox = document.getElementById('status');
+
+            if (found) {
+                statusBox.innerHTML = `<strong>ID:</strong> ${found.id} | <strong>Status:</strong> <span style="color:#128807">${found.status}</span><br><small>Assigned Dept: ${found.dept}</small>`;
+            } else {
+                statusBox.innerHTML = "<span style='color:red'>ID not found. Please try again.</span>";
+            }
+        }
+
+        function updateStats() {
+            const db = JSON.parse(localStorage.getItem(DB_KEY)) || [];
+            const total = db.length;
+            const resolved = db.filter(g => g.status === "Resolved").length;
+            document.getElementById('statsDisplay').innerText = isTamil ?
+                `மொத்த புகார்கள்: ${total} | தீர்க்கப்பட்டவை: ${resolved}` :
+                `Total Grievances: ${total} | Resolved: ${resolved}`;
+        }
+
+        window.onload = function () {
+            generateCaptcha();
+            updateStats();
+        };
+    </script>
+</body>
+
+</html>
