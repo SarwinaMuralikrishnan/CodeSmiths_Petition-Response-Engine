@@ -99,5 +99,42 @@ def logout():
     session.clear()
     return redirect(url_for("index_page"))
 
+@app.route("/api/notify", methods=["POST"])
+def notify_citizen():
+    data = request.json
+    email = data.get("email")
+    petition_id = data.get("id")
+    status = data.get("status")
+
+    if not email:
+        return jsonify({"success": False, "message": "No email provided."})
+
+    remarks = data.get("remarks", "No official remarks provided.")
+    days_taken = data.get("daysTaken", "N/A")
+
+    print("\n" + "="*50)
+    print(f"📧 NEW SIMULATED EMAIL NOTIFICATION")
+    print(f"TO: {email}")
+    print(f"SUBJECT: Update on your Grievance Petition: {petition_id}")
+    print("-"*50)
+    
+    if status == "Resolved":
+        print(f"Dear Citizen,\n")
+        print(f"We are pleased to inform you that your petition ({petition_id}) has been successfully RESOLVED.")
+        print(f"Resolution Time: {days_taken} day(s)")
+        print(f"Official Remarks / Action Taken:\n> {remarks}")
+    elif status == "In Progress":
+        print(f"Dear Citizen,\n")
+        print(f"Your petition ({petition_id}) is currently IN PROGRESS and is being actively reviewed by officials.")
+        print(f"Official Remarks:\n> {remarks}")
+    else:
+        print(f"Dear Citizen,\n")
+        print(f"Your petition ({petition_id}) has been updated to: {status}.")
+        print(f"Official Remarks:\n> {remarks}")
+        
+    print("="*50 + "\n")
+    
+    return jsonify({"success": True, "message": f"Email successfully dispatched to {email}"})
+
 if __name__ == "__main__":
     app.run(debug=True)

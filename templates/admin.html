@@ -26,6 +26,12 @@
             }
         }
 
+        @keyframes blink {
+            50% {
+                opacity: 0.5;
+            }
+        }
+
         header {
             background: linear-gradient(90deg, #FF9933, #FFCC99);
             color: #FFFFFF;
@@ -128,6 +134,59 @@
             margin-bottom: 20px;
             border-left: 5px solid #e65100;
         }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 550px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+            border-top: 5px solid #128807;
+        }
+
+        .modal-header {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            color: #128807;
+        }
+
+        .modal-body {
+            font-size: 15px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .modal-footer {
+            text-align: right;
+        }
+
+        .close-btn {
+            background: #ccc;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -212,14 +271,38 @@
                         <tr>
                             <th id="thId">ID</th>
                             <th id="thCitizen">Citizen</th>
+                            <th id="thDistrict">District</th>
                             <th id="thCategory">Category (AI)</th>
                             <th id="thPriority">Priority & Deadline</th>
                             <th id="thStatus">Current Status</th>
+                            <th id="thAction">Action</th>
                         </tr>
                     </thead>
                     <tbody id="petitionTableBody">
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Solve Modal -->
+    <div id="solveModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header" id="modalTitle">Solve Petition</div>
+            <div class="modal-body" id="modalBody">
+                <!-- Data injected here -->
+            </div>
+            <label id="lblModalStatus" style="font-weight:bold; color:#128807;">Update Progress (Status):</label>
+            <select id="modalStatusSelect" style="width:100%; margin-bottom: 15px;"></select>
+            <label id="lblModalRemarks" style="font-weight:bold; color:#128807;">Official Remarks / Action
+                Taken:</label>
+            <textarea id="modalRemarks" rows="4"
+                style="width:100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc;  margin-top: 5px;"></textarea>
+
+            <div class="modal-footer" style="margin-top: 20px;">
+                <button class="close-btn" onclick="closeModal()">Cancel</button>
+                <button class="main-action" style="width:auto; padding: 12px 20px; margin:0;"
+                    onclick="saveProgress()">Complete Update ✅</button>
             </div>
         </div>
     </div>
@@ -240,16 +323,24 @@
                 listTitle: "Incoming Petitions List",
                 thId: "ID",
                 thCitizen: "Citizen",
+                thDistrict: "District",
                 thCategory: "Category (AI)",
                 thPriority: "Priority & Deadline",
                 thStatus: "Current Status",
+                thAction: "Action",
                 statusOptions: ["Under Review", "In Progress", "Resolved"],
                 statsPrefix: "Total", statsResolved: "Resolved", statsPending: "Pending",
                 btnLang: "தமிழ்",
                 alertSuccess: "Updated successfully to",
                 alertError: "ID not found.",
                 lblFilter: "Filter by Department:",
-                optAll: "All Departments"
+                optAll: "All Departments",
+                btnSolve: "View / Solve",
+                modDocs: "Uploaded Details",
+                modDesc: "Problem Description",
+                modYes: "📁 Documents Available",
+                modNo: "❌ No Documents",
+                modNotify: "📧 Automatically Notify Citizen via Email?"
             },
             ta: {
                 headerTitle: "🏛️ தமிழ்நாடு அரசு அதிகாரப்பூர்வ மேலாண்மை",
@@ -262,16 +353,24 @@
                 listTitle: "மனுக்களின் பட்டியல்",
                 thId: "ஐடி (ID)",
                 thCitizen: "பெயர்",
+                thDistrict: "மாவட்டம்",
                 thCategory: "வகை (AI)",
                 thPriority: "முன்னுரிமை & கெடு",
                 thStatus: "தற்போதைய நிலை",
+                thAction: "செயல்",
                 statusOptions: ["ஆய்வில் உள்ளது", "செயல்பாட்டில் உள்ளது", "தீர்க்கப்பட்டது"],
                 statsPrefix: "மொத்தம்", statsResolved: "தீர்க்கப்பட்டவை", statsPending: "நிலுவையில் உள்ளவை",
                 btnLang: "English",
                 alertSuccess: "வெற்றிகரமாக மாற்றப்பட்டது",
                 alertError: "ஐடி காணப்படவில்லை.",
                 lblFilter: "துறை வாரியாக வடிகட்டவும்:",
-                optAll: "அனைத்து துறைகளும்"
+                optAll: "அனைத்து துறைகளும்",
+                btnSolve: "காண்க / தீர்க்க",
+                modDocs: "பதிவேற்றப்பட்ட ஆவணங்கள்",
+                modDesc: "பிரச்சனை விளக்கம்",
+                modYes: "📁 ஆவணங்கள் உள்ளன",
+                modNo: "❌ ஆவணங்கள் இல்லை",
+                modNotify: "📧 மின்னஞ்சல் மூலம் குடிமகனுக்குத் தெரிவிக்கவா?"
             }
         };
 
@@ -293,9 +392,12 @@
             document.getElementById('listTitle').innerText = t.listTitle;
             document.getElementById('thId').innerText = t.thId;
             document.getElementById('thCitizen').innerText = t.thCitizen;
+            document.getElementById('thDistrict').innerText = t.thDistrict;
             document.getElementById('thCategory').innerText = t.thCategory;
             document.getElementById('thPriority').innerText = t.thPriority;
             document.getElementById('thStatus').innerText = t.thStatus;
+            document.getElementById('thAction').innerText = t.thAction;
+            document.getElementById('lblNotify').innerText = t.modNotify;
             document.getElementById('langToggle').innerText = t.btnLang;
             document.getElementById('lblFilter').innerText = t.lblFilter;
             document.getElementById('deptFilter').options[0].innerText = t.optAll;
@@ -318,12 +420,28 @@
             const body = document.getElementById('petitionTableBody');
             const filterVal = document.getElementById('deptFilter').value;
 
-            let filteredGrievances = grievances;
-            if (filterVal !== "All") {
-                filteredGrievances = grievances.filter(g => (g.dept || 'General') === filterVal);
-            }
+            let filteredGrievances = grievances.filter(g => g.status !== 'Resolved');
 
-            body.innerHTML = filteredGrievances.map(g => {
+            if (filterVal !== "All") {
+                filteredGrievances = filteredGrievances.filter(g => (g.dept || 'General') === filterVal);
+            }
+            let grouped = [];
+            filteredGrievances.forEach(g => {
+                let existingGroup = grouped.find(group =>
+                    group.main.district === g.district &&
+                    group.main.description && g.description &&
+                    group.main.description.toLowerCase().trim() === g.description.toLowerCase().trim()
+                );
+                if (existingGroup) {
+                    existingGroup.duplicates.push(g);
+                } else {
+                    grouped.push({ main: g, duplicates: [] });
+                }
+            });
+
+            body.innerHTML = grouped.map(group => {
+                const g = group.main;
+                const dupCount = group.duplicates.length;
                 const statusIdx = translations.en.statusOptions.indexOf(g.status);
                 const displayStatus = statusIdx !== -1 ? t.statusOptions[statusIdx] : g.status;
 
@@ -333,17 +451,41 @@
                 const priorityNormalStr = isTamil ? "சாதாரணம்" : "Normal";
                 const dueStr = isTamil ? "கெடு" : "Due";
 
+                let daysPassed = 0;
+                if (g.date) {
+                    const submissionDate = new Date(g.date);
+                    const now = new Date();
+                    if (!isNaN(submissionDate)) {
+                        daysPassed = Math.floor((now - submissionDate) / (1000 * 60 * 60 * 24));
+                    }
+                }
+
+                let flagHtml = "";
+                if (g.status !== "Resolved") {
+                    if (isUrgent && daysPassed > 2) {
+                        const esText = isTamil ? "⚠️ நினைவூட்டல்: > 2 நாட்களாக தீர்க்கப்படவில்லை!" : "⚠️ ESCALATED: Unsolved for > 2 Days!";
+                        flagHtml = `<div style="color: #d9534f; font-weight: bold; font-size: 11px; margin-top: 5px; animation: blink 1s infinite;">${esText}</div>`;
+                    } else if (!isUrgent && daysPassed > 5) {
+                        const flText = isTamil ? "⚠️ எச்சரிக்கை: > 5 நாட்களாக தீர்க்கப்படவில்லை" : "⚠️ FLAGGED: Unsolved for > 5 Days";
+                        flagHtml = `<div style="color: #d9534f; font-weight: bold; font-size: 11px; margin-top: 5px;">${flText}</div>`;
+                    }
+                }
+
                 let priorityHtml = isUrgent
-                    ? `<span style="color: red; font-weight: bold;">${priorityUrgentStr}</span><br><small>${dueStr}: ${deadline}</small>`
-                    : `<span style="color: grey;">${priorityNormalStr}</span><br><small>${dueStr}: ${deadline}</small>`;
+                    ? `<span style="color: red; font-weight: bold;">${priorityUrgentStr}</span><br><small>${dueStr}: ${deadline}</small>${flagHtml}`
+                    : `<span style="color: grey;">${priorityNormalStr}</span><br><small>${dueStr}: ${deadline}</small>${flagHtml}`;
+
+                let dupHtml = dupCount > 0 ? `<br><small style="color:#d9534f; font-weight:bold;">+ ${dupCount} Duplicate(s)</small>` : '';
 
                 return `
                 <tr>
-                    <td><b>${g.id}</b></td>
+                    <td><b>${g.id}</b>${dupHtml}</td>
                     <td>${g.name}</td>
+                    <td>${g.district || 'N/A'}</td>
                     <td>${g.dept || 'General'}</td>
                     <td>${priorityHtml}</td>
                     <td><span style="color: ${g.status === 'Resolved' ? 'green' : 'orange'}; font-weight: bold;">${displayStatus}</span></td>
+                    <td><button onclick="openSolveModal('${g.id}')" style="background:#007BFF; color:white; border:none; padding:8px 12px; border-radius:5px; cursor:pointer; font-weight:bold; box-shadow: 0 2px 4px rgba(0,0,0,0.2); transition:0.2s;">${t.btnSolve}</button></td>
                 </tr>
             `;
             }).reverse().join('');
@@ -356,10 +498,38 @@
             const t = isTamil ? translations.ta : translations.en;
 
             if (index !== -1) {
-                grievances[index].status = status;
+                const target = grievances[index];
+
+                // Identify all duplicates to resolve them together
+                const duplicates = grievances.filter(g =>
+                    g.district === target.district &&
+                    g.description && target.description &&
+                    g.description.toLowerCase().trim() === target.description.toLowerCase().trim()
+                );
+
+                // Save remarks to main target & duplicates
+                let remarks = "";
+                const modalRemarksField = document.getElementById('modalRemarks');
+                if (modalRemarksField && modalRemarksField.value.trim() !== '') {
+                    remarks = modalRemarksField.value;
+                    target.remarks = remarks;
+                }
+
+                duplicates.forEach(d => {
+                    d.status = status;
+                    if (remarks) d.remarks = remarks;
+                });
+
                 localStorage.setItem('tn_db_final', JSON.stringify(grievances));
-                alert(`ID ${id} ${t.alertSuccess} ${status}!`);
+
+                let msg = `ID ${id} ${t.alertSuccess} ${status}!`;
+                if (duplicates.length > 1) {
+                    msg = `ID ${id} and ${duplicates.length - 1} duplicate(s) ${t.alertSuccess} ${status}!`;
+                }
+
+                alert(msg);
                 document.getElementById('adminId').value = "";
+                if (currentSolveId === id) closeModal();
                 renderTable();
                 updateStats();
             } else {
@@ -374,6 +544,63 @@
             const pending = total - resolved;
             document.getElementById('statsDisplay').innerText =
                 `${t.statsPrefix}: ${total} | ${t.statsResolved}: ${resolved} | ${t.statsPending}: ${pending}`;
+        }
+
+        let currentSolveId = null;
+
+        function openSolveModal(id) {
+            const index = grievances.findIndex(g => g.id === id);
+            if (index === -1) return;
+            const g = grievances[index];
+            currentSolveId = id;
+            const t = isTamil ? translations.ta : translations.en;
+
+            document.getElementById('modalTitle').innerText = `📋 ${t.btnSolve} - ${id}`;
+            const docStatus = g.isUrgent ? t.modYes : t.modNo;
+            const docColor = g.isUrgent ? 'green' : 'grey';
+
+            let html = `
+                <div style="background:#f8f9fa; padding:15px; border-radius:8px; border-left:4px solid #128807;">
+                    <p style="margin:0 0 8px 0;"><b>${t.thCitizen}:</b> ${g.name} &nbsp;|&nbsp; <b>${t.thDistrict}:</b> ${g.district || 'N/A'}</p>
+                    <p style="margin:0 0 8px 0;"><b>${t.thCategory}:</b> ${g.dept || 'General'}</p>
+                    <p style="margin:0;"><b>${t.modDocs}:</b> <span style="color:${docColor}; font-weight:bold;">${docStatus}</span></p>
+                </div>
+                <div style="margin-top:15px;">
+                    <b style="color:#d9534f;">${t.modDesc}:</b>
+                    <div style="background:#fff; padding:12px; border:1px solid #ddd; border-radius:5px; margin-top:5px; font-style:italic;">"${g.description}"</div>
+                </div>
+            `;
+            document.getElementById('modalBody').innerHTML = html;
+
+            const select = document.getElementById('modalStatusSelect');
+            select.innerHTML = "";
+            t.statusOptions.forEach((opt, idx) => {
+                const option = document.createElement('option');
+                option.value = translations.en.statusOptions[idx];
+                option.innerText = opt;
+                if (option.value === g.status) option.selected = true;
+                select.appendChild(option);
+            });
+
+            document.getElementById('modalRemarks').value = g.remarks || "";
+            document.getElementById('solveModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('solveModal').style.display = 'none';
+            currentSolveId = null;
+        }
+
+        function saveProgress() {
+            if (!currentSolveId) return;
+            const targetId = currentSolveId;
+            const newStatus = document.getElementById('modalStatusSelect').value;
+
+            document.getElementById('adminId').value = targetId;
+            document.getElementById('newStatus').value = newStatus;
+
+            // This natively saves our array and alerts
+            updateStatus();
         }
 
         window.onload = updateUI;

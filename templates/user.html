@@ -432,6 +432,52 @@
             box-shadow: 0 10px 25px rgba(18, 136, 7, 0.5);
         }
 
+        .chatbot-popup-msg {
+            position: fixed;
+            bottom: 35px;
+            right: 100px;
+            background: #ffffff;
+            color: #128807;
+            padding: 10px 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            font-weight: bold;
+            font-size: 13px;
+            z-index: 1000;
+            animation: pulse-border 1.5s infinite;
+            border: 2px solid #128807;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .chatbot-popup-msg::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -8px;
+            margin-top: -8px;
+            border-width: 8px 0 8px 8px;
+            border-style: solid;
+            border-color: transparent transparent transparent #128807;
+        }
+
+        @keyframes pulse-border {
+            0% {
+                box-shadow: 0 0 0 0 rgba(18, 136, 7, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(18, 136, 7, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(18, 136, 7, 0);
+            }
+        }
+
         .chat-msg-wrapper {
             display: flex;
             align-items: flex-end;
@@ -586,6 +632,52 @@
             <label id="emailLabel">Email Address:</label>
             <input type="email" id="email" placeholder="example@mail.com" required>
 
+            <label id="addressLabel">Address:</label>
+            <input type="text" id="address" placeholder="Enter your full address" required>
+
+            <label id="districtLabel">District:</label>
+            <select id="district" required>
+                <option value="" disabled selected>Select a District</option>
+                <option value="Ariyalur">Ariyalur</option>
+                <option value="Chengalpattu">Chengalpattu</option>
+                <option value="Chennai">Chennai</option>
+                <option value="Coimbatore">Coimbatore</option>
+                <option value="Cuddalore">Cuddalore</option>
+                <option value="Dharmapuri">Dharmapuri</option>
+                <option value="Dindigul">Dindigul</option>
+                <option value="Erode">Erode</option>
+                <option value="Kallakurichi">Kallakurichi</option>
+                <option value="Kanchipuram">Kanchipuram</option>
+                <option value="Kanyakumari">Kanyakumari</option>
+                <option value="Karur">Karur</option>
+                <option value="Krishnagiri">Krishnagiri</option>
+                <option value="Madurai">Madurai</option>
+                <option value="Mayiladuthurai">Mayiladuthurai</option>
+                <option value="Nagapattinam">Nagapattinam</option>
+                <option value="Namakkal">Namakkal</option>
+                <option value="Nilgiris">Nilgiris</option>
+                <option value="Perambalur">Perambalur</option>
+                <option value="Pudukkottai">Pudukkottai</option>
+                <option value="Ramanathapuram">Ramanathapuram</option>
+                <option value="Ranipet">Ranipet</option>
+                <option value="Salem">Salem</option>
+                <option value="Sivaganga">Sivaganga</option>
+                <option value="Tenkasi">Tenkasi</option>
+                <option value="Thanjavur">Thanjavur</option>
+                <option value="Theni">Theni</option>
+                <option value="Thoothukudi">Thoothukudi</option>
+                <option value="Tiruchirappalli">Tiruchirappalli</option>
+                <option value="Tirunelveli">Tirunelveli</option>
+                <option value="Tirupattur">Tirupattur</option>
+                <option value="Tiruppur">Tiruppur</option>
+                <option value="Tiruvallur">Tiruvallur</option>
+                <option value="Tiruvannamalai">Tiruvannamalai</option>
+                <option value="Tiruvarur">Tiruvarur</option>
+                <option value="Vellore">Vellore</option>
+                <option value="Viluppuram">Viluppuram</option>
+                <option value="Virudhunagar">Virudhunagar</option>
+            </select>
+
             <label id="categoryLabel">Category:</label>
             <select id="category">
                 <option value="General">General</option>
@@ -659,7 +751,7 @@
             <div class="chatTitleWrapper">
                 <div class="chatbot-avatar">✨</div>
                 <div class="chatTitleCol">
-                    <span id="chatTitle">Subi ✨</span>
+                    <span id="chatTitle">Nila ✨</span>
                     <span class="chatTitleSub">AI Support</span>
                 </div>
             </div>
@@ -685,6 +777,11 @@
             </button>
         </div>
     </div>
+
+    <div id="chatbot-popup" class="chatbot-popup-msg" onclick="toggleChatbot()">
+        <span id="popupText">Need Help? I am your AI assistant Nila ✨</span>
+    </div>
+
     <button id="chatbot-toggle" class="chatbot-toggle" onclick="toggleChatbot()">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round">
@@ -772,6 +869,9 @@
                 nameHolder: "Enter your name",
                 emailLabel: "Email Address:",
                 emailHolder: "example@mail.com",
+                addressLabel: "Address:",
+                addressHolder: "Enter your full address",
+                districtLabel: "District:",
                 categoryLabel: "Category:",
                 descLabel: "Grievance Description:",
                 descHolder: "AI will categorize this automatically...",
@@ -782,7 +882,8 @@
                 trackTitle: "Track Grievance 🔍",
                 trackHolder: "Enter ID (e.g., TN-1234)",
                 trackBtn: "Track Status",
-                langToggle: "தமிழ் / English"
+                langToggle: "தமிழ் / English",
+                popupText: "Need Help? I am your AI assistant Nila ✨"
             },
             ta: {
                 title: "தமிழ்நாடு அரசு புகார் தளம்",
@@ -794,6 +895,9 @@
                 nameHolder: "உங்கள் பெயரை உள்ளிடவும்",
                 emailLabel: "மின்னஞ்சல்:",
                 emailHolder: "உதாரணம்@mail.com",
+                addressLabel: "முகவரி:",
+                addressHolder: "உங்கள் முழு முகவரியை உள்ளிடவும்",
+                districtLabel: "மாவட்டம்:",
                 categoryLabel: "துறை:",
                 descLabel: "மனுவின் விளக்கம்:",
                 descHolder: "AI இதை தானாகவே வகைப்படுத்தும்...",
@@ -804,7 +908,8 @@
                 trackTitle: "மனு கண்காணிக்க 🔍",
                 trackHolder: "ஐடியை உள்ளிடவும் (எ.கா. TN-1234)",
                 trackBtn: "நிலை அறிய",
-                langToggle: "English / தமிழ்"
+                langToggle: "English / தமிழ்",
+                popupText: "உதவி தேவையா? நான் உங்கள் AI உதவியாளர் நிலா ✨"
             }
         };
 
@@ -822,6 +927,9 @@
             document.getElementById('name').placeholder = t.nameHolder;
             document.getElementById('emailLabel').innerText = t.emailLabel;
             document.getElementById('email').placeholder = t.emailHolder;
+            document.getElementById('addressLabel').innerText = t.addressLabel;
+            document.getElementById('address').placeholder = t.addressHolder;
+            document.getElementById('districtLabel').innerText = t.districtLabel;
             document.getElementById('categoryLabel').innerText = t.categoryLabel;
             document.getElementById('descLabel').innerText = t.descLabel;
             document.getElementById('description').placeholder = t.descHolder;
@@ -835,8 +943,9 @@
             document.getElementById('trackBtn').innerText = t.trackBtn;
 
             document.getElementById('langToggle').innerText = t.langToggle;
+            document.getElementById('popupText').innerText = t.popupText;
 
-            document.getElementById('chatTitle').innerText = isTamil ? "சுபி ✨" : "Subi ✨";
+            document.getElementById('chatTitle').innerText = isTamil ? "நிலா ✨" : "Nila ✨";
             document.getElementById('chatInput').placeholder = isTamil ? "உங்கள் பிரச்சனையை விவரிக்கவும்..." : "Describe your issue...";
 
             if (typeof chatContext !== 'undefined') {
@@ -846,7 +955,7 @@
                     <div class="typing-dot"></div>
                     <div class="typing-dot"></div>
                 </div>`;
-                chatContext = { step: 'initial', extracted: { name: '', email: '', desc: '' } };
+                chatContext = { step: 'initial', extracted: { name: '', email: '', desc: '', address: '', district: '' } };
                 const cb = document.getElementById('chatbot-container');
                 if (cb.style.display === 'flex') {
                     sendBotMessage(isTamil ? chatTranslations.ta.intro : chatTranslations.en.intro);
@@ -921,6 +1030,9 @@
             const newEntry = {
                 id: id,
                 name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                address: document.getElementById('address').value,
+                district: document.getElementById('district').value,
                 description: desc,
                 dept: assignedDept,
                 status: "Under Review",
@@ -997,24 +1109,28 @@
         }
 
         // --- Advanced Gen AI Chatbot Logic ---
-        let chatContext = { step: 'initial', extracted: { name: '', email: '', desc: '' } };
+        let chatContext = { step: 'initial', extracted: { name: '', email: '', desc: '', address: '', district: '' } };
 
         const chatTranslations = {
             en: {
-                intro: "Hello! I am Subi ✨, your dedicated AI Assistant. You can tell me your entire grievance in one message (including your name and email), and I will extract everything automatically! Or we can go step-by-step. How can I help?",
+                intro: "Hello! I am Nila ✨, your dedicated AI Assistant. You can tell me your entire grievance in one message (including your name and email), and I will extract everything automatically! Or we can go step-by-step. How can I help?",
                 processing: "Analyzing your input...",
-                success: "I extracted the details! 📝 Name: {name}, 📧 Email: {email}. I have autofilled the petition. You can now upload any documents and hit submit.",
+                success: "I extracted the details! 📝 Name: {name}, 📧 Email: {email}. I have autofilled the petition. You can now enter your address, select your district, upload any documents and hit submit.",
                 askName: "Could you please tell me your full name?",
                 askEmail: "Got it, {name}. Please provide your email address.",
+                askAddress: "Thank you. What is your full address?",
+                askDistrict: "Noted. Which district are you from?",
                 askDesc: "Thanks! What is your grievance or issue?",
                 done: "Petition filled successfully. Please review and submit!"
             },
             ta: {
-                intro: "வணக்கம்! நான் சுபி ✨, உங்கள் AI உதவியாளர். உங்கள் பெயர், மின்னஞ்சல் மற்றும் குறையை ஒரே செய்தியில் கூறலாம், நான் எல்லாவற்றையும் தானாகவே பிரித்தெடுப்பேன்! அல்லது படிப்படியாக செல்லலாம். நான் எப்படி உதவ முடியும்?",
+                intro: "வணக்கம்! நான் நிலா ✨, உங்கள் AI உதவியாளர். உங்கள் பெயர், மின்னஞ்சல் மற்றும் குறையை ஒரே செய்தியில் கூறலாம், நான் எல்லாவற்றையும் தானாகவே பிரித்தெடுப்பேன்! அல்லது படிப்படியாக செல்லலாம். நான் எப்படி உதவ முடியும்?",
                 processing: "உங்கள் தகவலை பகுப்பாய்வு செய்கிறேன்...",
-                success: "விவரங்களை நான் எடுத்தேன்! 📝 பெயர்: {name}, 📧 மின்னஞ்சல்: {email}. நான் படிவத்தை நிரப்பிவிட்டேன். ஆவணங்களை பதிவேற்றி சமர்ப்பிக்கவும்.",
+                success: "விவரங்களை நான் எடுத்தேன்! 📝 பெயர்: {name}, 📧 மின்னஞ்சல்: {email}. நான் படிவத்தை நிரப்பிவிட்டேன். உங்கள் முகவரி, மாவட்டத்தை தேர்வு செய்து, ஆவணங்களை பதிவேற்றி சமர்ப்பிக்கவும்.",
                 askName: "உங்கள் முழு பெயர் என்ன?",
                 askEmail: "நன்றி, {name}. உங்கள் மின்னஞ்சல் முகவரியை தர முடியுமா?",
+                askAddress: "நன்றி. உங்கள் முழு முகவரி என்ன?",
+                askDistrict: "உங்கள் மாவட்டம் எது?",
                 askDesc: "நன்றி! உங்கள் குறை என்ன?",
                 done: "படிவம் நிரப்பப்பட்டது. சரிபார்த்து சமர்ப்பிக்கவும்!"
             }
@@ -1022,8 +1138,12 @@
 
         function toggleChatbot() {
             const cb = document.getElementById('chatbot-container');
+            const popup = document.getElementById('chatbot-popup');
+
             if (cb.style.display === 'none' || cb.style.display === '') {
                 cb.style.display = 'flex';
+                if (popup) popup.style.display = 'none';
+
                 // Only send intro if we haven't sent any messages yet (excluding typing indicator)
                 const msgs = document.getElementById('chatbot-messages').querySelectorAll('.chat-msg');
                 if (msgs.length === 0) {
@@ -1035,6 +1155,7 @@
                 }
             } else {
                 cb.style.display = 'none';
+                if (popup) popup.style.display = 'flex';
             }
         }
 
@@ -1151,6 +1272,32 @@
                     chatContext.extracted.email = text;
                     document.getElementById('email').value = text;
                     hideTyping();
+                    sendBotMessage(t.askAddress);
+                    chatContext.step = 'address';
+                }
+                else if (chatContext.step === 'address') {
+                    chatContext.extracted.address = text;
+                    document.getElementById('address').value = text;
+                    hideTyping();
+                    sendBotMessage(t.askDistrict);
+                    chatContext.step = 'district';
+                }
+                else if (chatContext.step === 'district') {
+                    chatContext.extracted.district = text;
+
+                    // Try to auto-select district
+                    const distSelect = document.getElementById('district');
+                    for (let i = 0; i < distSelect.options.length; i++) {
+                        if (distSelect.options[i].value.toLowerCase() === text.toLowerCase()) {
+                            distSelect.selectedIndex = i;
+                            break;
+                        }
+                    }
+                    if (distSelect.selectedIndex === 0) {
+                        distSelect.innerHTML += `<option value="${text}" selected>${text}</option>`;
+                    }
+
+                    hideTyping();
                     sendBotMessage(t.done);
                     chatContext.step = 'done';
                 }
@@ -1173,6 +1320,19 @@
         window.onload = function () {
             generateCaptcha();
             updateStats();
+
+            // Auto-detect district from address input
+            document.getElementById('address').addEventListener('input', function () {
+                const addressText = this.value.toLowerCase();
+                const distSelect = document.getElementById('district');
+                for (let i = 1; i < distSelect.options.length; i++) {
+                    const distName = distSelect.options[i].value.toLowerCase();
+                    if (addressText.includes(distName)) {
+                        distSelect.selectedIndex = i;
+                        break;
+                    }
+                }
+            });
         };
     </script>
 </body>
