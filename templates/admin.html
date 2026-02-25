@@ -213,6 +213,7 @@
                             <th id="thId">ID</th>
                             <th id="thCitizen">Citizen</th>
                             <th id="thCategory">Category (AI)</th>
+                            <th id="thPriority">Priority & Deadline</th>
                             <th id="thStatus">Current Status</th>
                         </tr>
                     </thead>
@@ -240,6 +241,7 @@
                 thId: "ID",
                 thCitizen: "Citizen",
                 thCategory: "Category (AI)",
+                thPriority: "Priority & Deadline",
                 thStatus: "Current Status",
                 statusOptions: ["Under Review", "In Progress", "Resolved"],
                 statsPrefix: "Total", statsResolved: "Resolved", statsPending: "Pending",
@@ -261,6 +263,7 @@
                 thId: "ஐடி (ID)",
                 thCitizen: "பெயர்",
                 thCategory: "வகை (AI)",
+                thPriority: "முன்னுரிமை & கெடு",
                 thStatus: "தற்போதைய நிலை",
                 statusOptions: ["ஆய்வில் உள்ளது", "செயல்பாட்டில் உள்ளது", "தீர்க்கப்பட்டது"],
                 statsPrefix: "மொத்தம்", statsResolved: "தீர்க்கப்பட்டவை", statsPending: "நிலுவையில் உள்ளவை",
@@ -291,6 +294,7 @@
             document.getElementById('thId').innerText = t.thId;
             document.getElementById('thCitizen').innerText = t.thCitizen;
             document.getElementById('thCategory').innerText = t.thCategory;
+            document.getElementById('thPriority').innerText = t.thPriority;
             document.getElementById('thStatus').innerText = t.thStatus;
             document.getElementById('langToggle').innerText = t.btnLang;
             document.getElementById('lblFilter').innerText = t.lblFilter;
@@ -322,11 +326,23 @@
             body.innerHTML = filteredGrievances.map(g => {
                 const statusIdx = translations.en.statusOptions.indexOf(g.status);
                 const displayStatus = statusIdx !== -1 ? t.statusOptions[statusIdx] : g.status;
+
+                const isUrgent = g.isUrgent;
+                const deadline = g.deadline ? g.deadline : "N/A";
+                const priorityUrgentStr = isTamil ? "🚨 அவசரம்" : "🚨 Urgent";
+                const priorityNormalStr = isTamil ? "சாதாரணம்" : "Normal";
+                const dueStr = isTamil ? "கெடு" : "Due";
+
+                let priorityHtml = isUrgent
+                    ? `<span style="color: red; font-weight: bold;">${priorityUrgentStr}</span><br><small>${dueStr}: ${deadline}</small>`
+                    : `<span style="color: grey;">${priorityNormalStr}</span><br><small>${dueStr}: ${deadline}</small>`;
+
                 return `
                 <tr>
                     <td><b>${g.id}</b></td>
                     <td>${g.name}</td>
                     <td>${g.dept || 'General'}</td>
+                    <td>${priorityHtml}</td>
                     <td><span style="color: ${g.status === 'Resolved' ? 'green' : 'orange'}; font-weight: bold;">${displayStatus}</span></td>
                 </tr>
             `;

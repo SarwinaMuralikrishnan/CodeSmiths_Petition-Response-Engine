@@ -174,6 +174,251 @@
             margin-top: 25px;
             border-left: 5px solid #FF9933;
         }
+
+        /* Tracking Timeline Styles */
+        .tracking-timeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding: 20px 0;
+            position: relative;
+        }
+
+        .timeline-step {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            width: 30%;
+        }
+
+        .timeline-icon {
+            width: 45px;
+            height: 45px;
+            background: #fff;
+            border: 4px solid #ddd;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 10px;
+            font-size: 20px;
+            transition: all 0.4s ease;
+        }
+
+        .timeline-step.completed .timeline-icon,
+        .timeline-step.active .timeline-icon {
+            border-color: #128807;
+            background: #128807;
+            color: white;
+            box-shadow: 0 0 15px rgba(18, 136, 7, 0.4);
+            transform: scale(1.1);
+        }
+
+        .timeline-text {
+            font-size: 13px;
+            font-weight: bold;
+            color: #888;
+            transition: color 0.4s ease;
+        }
+
+        .timeline-step.completed .timeline-text,
+        .timeline-step.active .timeline-text {
+            color: #128807;
+        }
+
+        .tracking-id-display {
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 5px;
+            color: #333;
+            background: rgba(255, 153, 51, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px dashed #FF9933;
+        }
+
+        .chatbot-container {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 320px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            display: none;
+            flex-direction: column;
+            border: 2px solid #128807;
+            overflow: hidden;
+            z-index: 1000;
+        }
+
+        .chatbot-header {
+            background: linear-gradient(45deg, #128807, #0F6B3A);
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .chatbot-header button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 0;
+            margin: 0;
+            transition: transform 0.2s;
+        }
+
+        .chatbot-header button:hover {
+            transform: scale(1.2);
+        }
+
+        .chatbot-messages {
+            height: 300px;
+            overflow-y: auto;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            font-size: 14px;
+            background: #f4f7f6;
+        }
+
+        .chatbot-input {
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+
+        .chatbot-input input {
+            flex: 1;
+            border: none;
+            padding: 15px;
+            border-radius: 0;
+            margin: 0;
+            background: #fff;
+        }
+
+        .chatbot-input button {
+            background: #FF9933;
+            border: none;
+            padding: 15px 20px;
+            margin: 0;
+            border-radius: 0;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .chatbot-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #128807, #0F6B3A);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 28px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .chatbot-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .chat-msg {
+            padding: 10px 15px;
+            border-radius: 15px;
+            max-width: 85%;
+            word-wrap: break-word;
+            line-height: 1.4;
+            animation: fadeInChat 0.3s ease-in;
+        }
+
+        @keyframes fadeInChat {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-bot {
+            background: #e9ecef;
+            color: #333;
+            align-self: flex-start;
+            border-bottom-left-radius: 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .chat-user {
+            background: linear-gradient(45deg, #128807, #0F6B3A);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 5px;
+            padding: 10px 15px;
+            background: #e9ecef;
+            border-radius: 15px;
+            border-bottom-left-radius: 0;
+            align-self: flex-start;
+            width: fit-content;
+            display: none;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #128807;
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
     </style>
 </head>
 
@@ -254,6 +499,9 @@
             <textarea id="description" rows="4" placeholder="AI will categorize this automatically..."
                 required></textarea>
 
+            <label id="fileLabel">Upload Pictures/Documents (Optional):</label>
+            <input type="file" id="fileUpload" accept="image/*,.pdf,.doc,.docx" multiple>
+
             <label id="captchaLabel">Security Check:</label>
             <div style="display: flex; align-items: center; gap: 10px; margin-top: 5px;">
                 <canvas id="captchaCanvas" width="150" height="40"
@@ -275,6 +523,28 @@
             <div id="status">Status will appear here...</div>
         </div>
     </div>
+
+    <!-- Chatbot UI -->
+    <div id="chatbot-container" class="chatbot-container">
+        <div id="chatbot-header" class="chatbot-header">
+            <span id="chatTitle">Nila ✨</span>
+            <button onclick="toggleChatbot()">✖</button>
+        </div>
+        <div id="chatbot-messages" class="chatbot-messages">
+            <!-- Messages go here -->
+            <div id="typingIndicator" class="typing-indicator">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chatInput" placeholder="Describe your issue..."
+                onkeypress="handleChatKeyPress(event)">
+            <button onclick="handleChatSubmit()">➤</button>
+        </div>
+    </div>
+    <button id="chatbot-toggle" class="chatbot-toggle" onclick="toggleChatbot()">💬</button>
 
     <footer>
         <p>&copy; 2026 Government of Tamil Nadu. All rights reserved.</p>
@@ -359,6 +629,7 @@
                 categoryLabel: "Category:",
                 descLabel: "Grievance Description:",
                 descHolder: "AI will categorize this automatically...",
+                fileLabel: "Upload Pictures/Documents (Optional):",
                 captchaLabel: "Security Check:",
                 captchaHolder: "Enter code",
                 submitBtn: "Submit Securely ✅",
@@ -380,6 +651,7 @@
                 categoryLabel: "துறை:",
                 descLabel: "மனுவின் விளக்கம்:",
                 descHolder: "AI இதை தானாகவே வகைப்படுத்தும்...",
+                fileLabel: "படங்கள்/ஆவணங்களை பதிவேற்றுக (விரும்பினால்):",
                 captchaLabel: "பாதுகாப்பு குறியீடு:",
                 captchaHolder: "குறியீட்டை உள்ளிடவும்",
                 submitBtn: "சமர்ப்பிக்கவும் ✅",
@@ -407,6 +679,7 @@
             document.getElementById('categoryLabel').innerText = t.categoryLabel;
             document.getElementById('descLabel').innerText = t.descLabel;
             document.getElementById('description').placeholder = t.descHolder;
+            document.getElementById('fileLabel').innerText = t.fileLabel;
             document.getElementById('captchaLabel').innerText = t.captchaLabel;
             document.getElementById('captcha').placeholder = t.captchaHolder;
             document.getElementById('submitBtn').innerText = t.submitBtn;
@@ -416,6 +689,23 @@
             document.getElementById('trackBtn').innerText = t.trackBtn;
 
             document.getElementById('langToggle').innerText = t.langToggle;
+
+            document.getElementById('chatTitle').innerText = isTamil ? "நிலா ✨" : "Nila ✨";
+            document.getElementById('chatInput').placeholder = isTamil ? "உங்கள் பிரச்சனையை விவரிக்கவும்..." : "Describe your issue...";
+
+            if (typeof chatContext !== 'undefined') {
+                document.getElementById('chatbot-messages').innerHTML = `
+                <div id="typingIndicator" class="typing-indicator" style="display: none;">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>`;
+                chatContext = { step: 'initial', extracted: { name: '', email: '', desc: '' } };
+                const cb = document.getElementById('chatbot-container');
+                if (cb.style.display === 'flex') {
+                    sendBotMessage(isTamil ? chatTranslations.ta.intro : chatTranslations.en.intro);
+                }
+            }
 
             updateStats();
         }
@@ -470,13 +760,27 @@
 
             const id = "TN-" + Math.floor(1000 + Math.random() * 9000);
 
+            const fileUpload = document.getElementById('fileUpload');
+            const hasFiles = fileUpload.files.length > 0;
+            const isUrgent = hasFiles;
+
+            const currentDate = new Date();
+            const deadlineDate = new Date();
+            if (isUrgent) {
+                deadlineDate.setDate(currentDate.getDate() + 7);
+            } else {
+                deadlineDate.setDate(currentDate.getDate() + 15);
+            }
+
             const newEntry = {
                 id: id,
                 name: document.getElementById('name').value,
                 description: desc,
                 dept: assignedDept,
                 status: "Under Review",
-                date: new Date().toLocaleDateString()
+                date: currentDate.toLocaleDateString(),
+                isUrgent: isUrgent,
+                deadline: deadlineDate.toLocaleDateString()
             };
 
             grievances.push(newEntry);
@@ -490,15 +794,213 @@
 
         function trackGrievance() {
             const db = JSON.parse(localStorage.getItem(DB_KEY)) || [];
-            const id = document.getElementById('trackingId').value.toUpperCase();
+            const id = document.getElementById('trackingId').value.trim().toUpperCase();
+            if (!id) return;
             const found = db.find(g => g.id === id);
             const statusBox = document.getElementById('status');
 
             if (found) {
-                statusBox.innerHTML = `<strong>ID:</strong> ${found.id} | <strong>Status:</strong> <span style="color:#128807">${found.status}</span><br><small>Assigned Dept: ${found.dept}</small>`;
+                const statuses = ["Under Review", "In Progress", "Resolved"];
+                const tStatus = [
+                    isTamil ? "ஆய்வில் உள்ளது" : "Under Review",
+                    isTamil ? "செயல்பாட்டில் உள்ளது" : "In Progress",
+                    isTamil ? "தீர்க்கப்பட்டது" : "Resolved"
+                ];
+
+                const currentIdx = statuses.indexOf(found.status);
+
+                let timelineHtml = `<div class="tracking-id-display">📋 ID: ${found.id} | 🏛️ Dept: ${found.dept} ${found.isUrgent ? '🚨' : ''}</div>`;
+                timelineHtml += '<div class="tracking-timeline">';
+
+                // Dynamic progress bar behind the icons
+                const progressWidth = currentIdx === 0 ? '0%' : (currentIdx === 1 ? '50%' : '100%');
+                timelineHtml += `<div style="position: absolute; top: 40px; left: 15%; width: 70%; height: 5px; background: #ddd; z-index: 1; border-radius: 5px;">
+                                   <div style="width: ${progressWidth}; height: 100%; background: #128807; border-radius: 5px; transition: width 0.8s ease;"></div>
+                                 </div>`;
+
+                const icons = ["📩", "⚙️", "✅"];
+
+                statuses.forEach((st, idx) => {
+                    let stepClass = "";
+                    if (idx < currentIdx) stepClass = "completed";
+                    else if (idx === currentIdx) stepClass = "active";
+
+                    timelineHtml += `
+                        <div class="timeline-step ${stepClass}">
+                            <div class="timeline-icon">${icons[idx]}</div>
+                            <div class="timeline-text">${tStatus[idx]}</div>
+                        </div>
+                    `;
+                });
+
+                timelineHtml += '</div>';
+
+                if (found.deadline) {
+                    const dueStr = isTamil ? "இலக்கு தீர்வு தேதி" : "Target Resolution Date";
+                    timelineHtml += `<div style="text-align:center; margin-top:10px; font-weight:bold; color:#d9534f; background:#fff2f2; padding:8px; border-radius:5px;">📅 ${dueStr}: ${found.deadline}</div>`;
+                }
+
+                statusBox.innerHTML = timelineHtml;
             } else {
-                statusBox.innerHTML = "<span style='color:red'>ID not found. Please try again.</span>";
+                statusBox.innerHTML = `<div style="text-align:center; padding: 20px;">
+                    <span style='color:#d9534f; font-size: 16px; font-weight: bold;'>
+                        ❌ ${isTamil ? "ஐடி காணப்படவில்லை. மீண்டும் முயற்சிக்கவும்." : "ID not found. Please try again."}
+                    </span>
+                </div>`;
             }
+        }
+
+        // --- Advanced Gen AI Chatbot Logic ---
+        let chatContext = { step: 'initial', extracted: { name: '', email: '', desc: '' } };
+
+        const chatTranslations = {
+            en: {
+                intro: "Hello! I am Nila ✨, your dedicated AI Assistant. You can tell me your entire grievance in one message (including your name and email), and I will extract everything automatically! Or we can go step-by-step. How can I help?",
+                processing: "Analyzing your input...",
+                success: "I extracted the details! 📝 Name: {name}, 📧 Email: {email}. I have autofilled the petition. You can now upload any documents and hit submit.",
+                askName: "Could you please tell me your full name?",
+                askEmail: "Got it, {name}. Please provide your email address.",
+                askDesc: "Thanks! What is your grievance or issue?",
+                done: "Petition filled successfully. Please review and submit!"
+            },
+            ta: {
+                intro: "வணக்கம்! நான் நிலா ✨, உங்கள் AI உதவியாளர். உங்கள் பெயர், மின்னஞ்சல் மற்றும் குறையை ஒரே செய்தியில் கூறலாம், நான் எல்லாவற்றையும் தானாகவே பிரித்தெடுப்பேன்! அல்லது படிப்படியாக செல்லலாம். நான் எப்படி உதவ முடியும்?",
+                processing: "உங்கள் தகவலை பகுப்பாய்வு செய்கிறேன்...",
+                success: "விவரங்களை நான் எடுத்தேன்! 📝 பெயர்: {name}, 📧 மின்னஞ்சல்: {email}. நான் படிவத்தை நிரப்பிவிட்டேன். ஆவணங்களை பதிவேற்றி சமர்ப்பிக்கவும்.",
+                askName: "உங்கள் முழு பெயர் என்ன?",
+                askEmail: "நன்றி, {name}. உங்கள் மின்னஞ்சல் முகவரியை தர முடியுமா?",
+                askDesc: "நன்றி! உங்கள் குறை என்ன?",
+                done: "படிவம் நிரப்பப்பட்டது. சரிபார்த்து சமர்ப்பிக்கவும்!"
+            }
+        };
+
+        function toggleChatbot() {
+            const cb = document.getElementById('chatbot-container');
+            if (cb.style.display === 'none' || cb.style.display === '') {
+                cb.style.display = 'flex';
+                // Only send intro if we haven't sent any messages yet (excluding typing indicator)
+                const msgs = document.getElementById('chatbot-messages').querySelectorAll('.chat-msg');
+                if (msgs.length === 0) {
+                    showTyping();
+                    setTimeout(() => {
+                        hideTyping();
+                        sendBotMessage(isTamil ? chatTranslations.ta.intro : chatTranslations.en.intro);
+                    }, 800);
+                }
+            } else {
+                cb.style.display = 'none';
+            }
+        }
+
+        function showTyping() {
+            const ind = document.getElementById('typingIndicator');
+            ind.style.display = 'flex';
+            document.getElementById('chatbot-messages').appendChild(ind); // move to bottom
+            scrollToChatBottom();
+        }
+
+        function hideTyping() {
+            document.getElementById('typingIndicator').style.display = 'none';
+        }
+
+        function sendBotMessage(text) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'chat-msg chat-bot';
+            msgDiv.innerText = text;
+            const msgsContainer = document.getElementById('chatbot-messages');
+            msgsContainer.insertBefore(msgDiv, document.getElementById('typingIndicator'));
+            scrollToChatBottom();
+        }
+
+        function sendUserMessage(text) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'chat-msg chat-user';
+            msgDiv.innerText = text;
+            const msgsContainer = document.getElementById('chatbot-messages');
+            msgsContainer.insertBefore(msgDiv, document.getElementById('typingIndicator'));
+            scrollToChatBottom();
+        }
+
+        function scrollToChatBottom() {
+            const msgs = document.getElementById('chatbot-messages');
+            msgs.scrollTop = msgs.scrollHeight;
+        }
+
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter') handleChatSubmit();
+        }
+
+        // Advanced Entity Extraction
+        function extractEntities(text) {
+            const emailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/i;
+            const nameRegex = /(?:my name is|i am|this is |பெயர் |நான் )\s*([A-Z][a-z]+(?:\s[A-Z][a-z]+)*)/i;
+
+            let emailMatch = text.match(emailRegex);
+            let nameMatch = text.match(nameRegex);
+
+            return {
+                email: emailMatch ? emailMatch[0] : null,
+                name: nameMatch ? nameMatch[1] : null,
+                desc: text
+            };
+        }
+
+        function handleChatSubmit() {
+            const inputField = document.getElementById('chatInput');
+            const text = inputField.value.trim();
+            if (!text) return;
+
+            sendUserMessage(text);
+            inputField.value = '';
+            showTyping();
+
+            setTimeout(() => {
+                const t = isTamil ? chatTranslations.ta : chatTranslations.en;
+
+                // Advanced mode parsing
+                if (chatContext.step === 'initial') {
+                    const extracted = extractEntities(text);
+
+                    if (extracted.email && extracted.name && text.length > 30) {
+                        // Got everything in one go! (Advanced AI mode)
+                        document.getElementById('name').value = extracted.name;
+                        document.getElementById('email').value = extracted.email;
+
+                        // Clean up desc lightly
+                        let desc = text.replace(extracted.email, '').replace(/my name is [a-zA-Z ]+/i, '').trim();
+                        document.getElementById('description').value = desc || text;
+
+                        hideTyping();
+                        sendBotMessage(t.success.replace('{name}', extracted.name).replace('{email}', extracted.email));
+                        chatContext.step = 'done';
+                    } else {
+                        // Fallback to step-by-step
+                        chatContext.extracted.desc = text;
+                        document.getElementById('description').value = text;
+                        hideTyping();
+                        sendBotMessage(t.askName);
+                        chatContext.step = 'name';
+                    }
+                }
+                else if (chatContext.step === 'name') {
+                    chatContext.extracted.name = text;
+                    document.getElementById('name').value = text;
+                    hideTyping();
+                    sendBotMessage(t.askEmail.replace('{name}', text));
+                    chatContext.step = 'email';
+                }
+                else if (chatContext.step === 'email') {
+                    chatContext.extracted.email = text;
+                    document.getElementById('email').value = text;
+                    hideTyping();
+                    sendBotMessage(t.done);
+                    chatContext.step = 'done';
+                }
+                else {
+                    hideTyping();
+                    sendBotMessage(isTamil ? "படிவம் ஏற்கனவே தொகுக்கப்பட்டுள்ளது!" : "Form is already filled out!");
+                }
+            }, 1500); // simulate AI processing delay
         }
 
         function updateStats() {
