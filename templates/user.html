@@ -749,9 +749,9 @@
     <div id="chatbot-container" class="chatbot-container">
         <div id="chatbot-header" class="chatbot-header">
             <div class="chatTitleWrapper">
-                <div class="chatbot-avatar">✨</div>
+                <div class="chatbot-avatar">🤖</div>
                 <div class="chatTitleCol">
-                    <span id="chatTitle">Nila ✨</span>
+                    <span id="chatTitle">CiviQ🤖</span>
                     <span class="chatTitleSub">AI Support</span>
                 </div>
             </div>
@@ -766,6 +766,10 @@
             </div>
         </div>
         <div class="chatbot-input">
+            <button id="voiceBtn" onclick="toggleVoiceRecognition()"
+                style="background: #e2e8f0; color: #128807; box-shadow: none;">
+                🎤
+            </button>
             <input type="text" id="chatInput" placeholder="Describe your issue..."
                 onkeypress="handleChatKeyPress(event)">
             <button onclick="handleChatSubmit()">
@@ -779,7 +783,7 @@
     </div>
 
     <div id="chatbot-popup" class="chatbot-popup-msg" onclick="toggleChatbot()">
-        <span id="popupText">Need Help? I am your AI assistant Nila ✨</span>
+        <span id="popupText">Need Help? I am your AI assistant CiviQ🤖</span>
     </div>
 
     <button id="chatbot-toggle" class="chatbot-toggle" onclick="toggleChatbot()">
@@ -883,7 +887,7 @@
                 trackHolder: "Enter ID (e.g., TN-1234)",
                 trackBtn: "Track Status",
                 langToggle: "தமிழ் / English",
-                popupText: "Need Help? I am your AI assistant Nila ✨"
+                popupText: "Need Help? I am your AI assistant CiviQ🤖"
             },
             ta: {
                 title: "தமிழ்நாடு அரசு புகார் தளம்",
@@ -909,7 +913,7 @@
                 trackHolder: "ஐடியை உள்ளிடவும் (எ.கா. TN-1234)",
                 trackBtn: "நிலை அறிய",
                 langToggle: "English / தமிழ்",
-                popupText: "உதவி தேவையா? நான் உங்கள் AI உதவியாளர் நிலா ✨"
+                popupText: "உதவி தேவையா? நான் உங்கள் AI உதவியாளர் CiviQ🤖"
             }
         };
 
@@ -945,7 +949,7 @@
             document.getElementById('langToggle').innerText = t.langToggle;
             document.getElementById('popupText').innerText = t.popupText;
 
-            document.getElementById('chatTitle').innerText = isTamil ? "நிலா ✨" : "Nila ✨";
+            document.getElementById('chatTitle').innerText = isTamil ? "CiviQ🤖" : "CiviQ🤖";
             document.getElementById('chatInput').placeholder = isTamil ? "உங்கள் பிரச்சனையை விவரிக்கவும்..." : "Describe your issue...";
 
             if (typeof chatContext !== 'undefined') {
@@ -1113,7 +1117,7 @@
 
         const chatTranslations = {
             en: {
-                intro: "Hello! I am Nila ✨, your dedicated AI Assistant. You can tell me your entire grievance in one message (including your name and email), and I will extract everything automatically! Or we can go step-by-step. How can I help?",
+                intro: "Hello! I am CiviQ🤖, your dedicated AI Assistant. You can tell me your entire grievance in one message (including your name and email), and I will extract everything automatically! Or we can go step-by-step. How can I help?",
                 processing: "Analyzing your input...",
                 success: "I extracted the details! 📝 Name: {name}, 📧 Email: {email}. I have autofilled the petition. You can now enter your address, select your district, upload any documents and hit submit.",
                 askName: "Could you please tell me your full name?",
@@ -1124,7 +1128,7 @@
                 done: "Petition filled successfully. Please review and submit!"
             },
             ta: {
-                intro: "வணக்கம்! நான் நிலா ✨, உங்கள் AI உதவியாளர். உங்கள் பெயர், மின்னஞ்சல் மற்றும் குறையை ஒரே செய்தியில் கூறலாம், நான் எல்லாவற்றையும் தானாகவே பிரித்தெடுப்பேன்! அல்லது படிப்படியாக செல்லலாம். நான் எப்படி உதவ முடியும்?",
+                intro: "வணக்கம்! நான் CiviQ🤖, உங்கள் AI உதவியாளர். உங்கள் பெயர், மின்னஞ்சல் மற்றும் குறையை ஒரே செய்தியில் கூறலாம், நான் எல்லாவற்றையும் தானாகவே பிரித்தெடுப்பேன்! அல்லது படிப்படியாக செல்லலாம். நான் எப்படி உதவ முடியும்?",
                 processing: "உங்கள் தகவலை பகுப்பாய்வு செய்கிறேன்...",
                 success: "விவரங்களை நான் எடுத்தேன்! 📝 பெயர்: {name}, 📧 மின்னஞ்சல்: {email}. நான் படிவத்தை நிரப்பிவிட்டேன். உங்கள் முகவரி, மாவட்டத்தை தேர்வு செய்து, ஆவணங்களை பதிவேற்றி சமர்ப்பிக்கவும்.",
                 askName: "உங்கள் முழு பெயர் என்ன?",
@@ -1317,6 +1321,97 @@
                 `Total Grievances: ${total} | Resolved: ${resolved}`;
         }
 
+        function showBotGrammarNotification(msg) {
+            let n = document.getElementById('grammar-notif');
+            if (!n) {
+                n = document.createElement('div');
+                n.id = 'grammar-notif';
+                n.style.position = 'fixed';
+                n.style.bottom = '100px';
+                n.style.right = '20px';
+                n.style.background = '#128807';
+                n.style.color = 'white';
+                n.style.padding = '8px 12px';
+                n.style.borderRadius = '5px';
+                n.style.fontSize = '12px';
+                n.style.zIndex = '1000';
+                n.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
+                n.style.transition = 'opacity 0.3s';
+                document.body.appendChild(n);
+            }
+            n.innerText = msg;
+            n.style.opacity = '1';
+            setTimeout(() => { n.style.opacity = '0'; }, 3000);
+        }
+
+        // --- Voice Recognition Logic ---
+        let recognition;
+        let isRecording = false;
+
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRec();
+            recognition.continuous = false;
+            recognition.interimResults = true;
+
+            recognition.onstart = function () {
+                isRecording = true;
+                const voiceBtn = document.getElementById('voiceBtn');
+                voiceBtn.innerHTML = '🛑';
+                voiceBtn.style.background = '#ff4d4d';
+                voiceBtn.style.color = '#fff';
+            };
+
+            recognition.onresult = function (event) {
+                let interimTranscript = '';
+                let finalTranscript = '';
+
+                for (let i = event.resultIndex; i < event.results.length; ++i) {
+                    if (event.results[i].isFinal) {
+                        finalTranscript += event.results[i][0].transcript;
+                    } else {
+                        interimTranscript += event.results[i][0].transcript;
+                    }
+                }
+
+                const chatInput = document.getElementById('chatInput');
+                if (finalTranscript !== '') {
+                    chatInput.value = chatInput.value + (chatInput.value ? ' ' : '') + finalTranscript;
+                }
+            };
+
+            recognition.onerror = function (event) {
+                console.error("Speech recognition error", event.error);
+                stopVoiceRecognition();
+            };
+
+            recognition.onend = function () {
+                stopVoiceRecognition();
+            };
+        }
+
+        function toggleVoiceRecognition() {
+            if (!recognition) {
+                alert(isTamil ? "உங்கள் உலாவி குரல் அங்கீகாரத்தை ஆதரிக்கவில்லை." : "Your browser does not support voice recognition.");
+                return;
+            }
+
+            if (isRecording) {
+                recognition.stop();
+            } else {
+                recognition.lang = isTamil ? 'ta-IN' : 'en-IN';
+                recognition.start();
+            }
+        }
+
+        function stopVoiceRecognition() {
+            isRecording = false;
+            const voiceBtn = document.getElementById('voiceBtn');
+            voiceBtn.innerHTML = '🎤';
+            voiceBtn.style.background = '#e2e8f0';
+            voiceBtn.style.color = '#128807';
+        }
+
         window.onload = function () {
             generateCaptcha();
             updateStats();
@@ -1332,6 +1427,61 @@
                         break;
                     }
                 }
+            });
+
+            // --- Grammar Auto-Correction Logic ---
+            let grammarTimeout;
+            const descriptionField = document.getElementById('description');
+
+            descriptionField.addEventListener('input', function () {
+                clearTimeout(grammarTimeout);
+                grammarTimeout = setTimeout(async () => {
+                    const text = descriptionField.value.trim();
+                    if (text.length < 5) return;
+
+                    try {
+                        const response = await fetch('https://api.languagetool.org/v2/check', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                            body: new URLSearchParams({ text: text, language: 'auto' })
+                        });
+                        const data = await response.json();
+
+                        if (data.matches && data.matches.length > 0) {
+                            let corrected = text;
+                            const matches = data.matches.sort((a, b) => b.offset - a.offset);
+                            let isCorrected = false;
+
+                            for (const match of matches) {
+                                if (match.replacements && match.replacements.length > 0) {
+                                    const start = match.offset;
+                                    const length = match.length;
+                                    const replacement = match.replacements[0].value;
+                                    corrected = corrected.substring(0, start) + replacement + corrected.substring(start + length);
+                                    isCorrected = true;
+                                }
+                            }
+
+                            if (isCorrected && corrected !== text) {
+                                const cursorPos = descriptionField.selectionStart;
+                                const originalValue = descriptionField.value;
+
+                                // Make sure we only replace if the user hasn't typed significantly more while fetching
+                                // By checking if value has changed more than expected, but a simple overwrite is mostly ok for a prototype.
+                                descriptionField.value = corrected;
+
+                                // Restore cursor position safely
+                                const newPos = Math.min(cursorPos + (corrected.length - text.length), corrected.length);
+                                descriptionField.setSelectionRange(newPos, newPos);
+
+                                const tMsg = isTamil ? "✨ AI உங்கள் இலக்கணத்தை சரிசெய்தது!" : "✨ AI auto-corrected your grammar!";
+                                showBotGrammarNotification(tMsg);
+                            }
+                        }
+                    } catch (err) {
+                        console.error("Grammar check failed", err);
+                    }
+                }, 1500);
             });
         };
     </script>
