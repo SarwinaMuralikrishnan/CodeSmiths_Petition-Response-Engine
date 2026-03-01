@@ -82,6 +82,12 @@
             border-color: var(--india-saffron);
         }
 
+        /* Hide native Edge/IE password reveal icons */
+        input::-ms-reveal,
+        input::-ms-clear {
+            display: none;
+        }
+
         .login-btn {
             width: 100%;
             padding: 15px;

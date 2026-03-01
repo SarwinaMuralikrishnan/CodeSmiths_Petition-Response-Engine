@@ -272,6 +272,7 @@
                             <th id="thId">ID</th>
                             <th id="thCitizen">Citizen</th>
                             <th id="thDistrict">District</th>
+                            <th id="thConstituency">Constituency</th>
                             <th id="thCategory">Category (AI)</th>
                             <th id="thPriority">Priority & Deadline</th>
                             <th id="thStatus">Current Status</th>
@@ -324,6 +325,7 @@
                 thId: "ID",
                 thCitizen: "Citizen",
                 thDistrict: "District",
+                thConstituency: "Constituency",
                 thCategory: "Category (AI)",
                 thPriority: "Priority & Deadline",
                 thStatus: "Current Status",
@@ -353,6 +355,7 @@
                 thId: "ஐடி (ID)",
                 thCitizen: "பெயர்",
                 thDistrict: "மாவட்டம்",
+                thConstituency: "சட்டமன்ற தொகுதி",
                 thCategory: "வகை (AI)",
                 thPriority: "முன்னுரிமை & கெடு",
                 thStatus: "தற்போதைய நிலை",
@@ -391,6 +394,7 @@
             document.getElementById('thId').innerText = t.thId;
             document.getElementById('thCitizen').innerText = t.thCitizen;
             document.getElementById('thDistrict').innerText = t.thDistrict;
+            document.getElementById('thConstituency').innerText = t.thConstituency;
             document.getElementById('thCategory').innerText = t.thCategory;
             document.getElementById('thPriority').innerText = t.thPriority;
             document.getElementById('thStatus').innerText = t.thStatus;
@@ -479,6 +483,7 @@
                     <td><b>${g.id}</b>${dupHtml}</td>
                     <td>${g.name}</td>
                     <td>${g.district || 'N/A'}</td>
+                    <td>${g.constituency || 'N/A'}</td>
                     <td>${g.dept || 'General'}</td>
                     <td>${priorityHtml}</td>
                     <td><span style="color: ${g.status === 'Resolved' ? 'green' : 'orange'}; font-weight: bold;">${displayStatus}</span></td>
@@ -558,7 +563,7 @@
 
             let html = `
                 <div style="background:#f8f9fa; padding:15px; border-radius:8px; border-left:4px solid #128807;">
-                    <p style="margin:0 0 8px 0;"><b>${t.thCitizen}:</b> ${g.name} &nbsp;|&nbsp; <b>${t.thDistrict}:</b> ${g.district || 'N/A'}</p>
+                    <p style="margin:0 0 8px 0;"><b>${t.thCitizen}:</b> ${g.name} &nbsp;|&nbsp; <b>${t.thDistrict}:</b> ${g.district || 'N/A'} &nbsp;|&nbsp; <b>${t.thConstituency}:</b> ${g.constituency || 'N/A'}</p>
                     <p style="margin:0 0 8px 0;"><b>${t.thCategory}:</b> ${g.dept || 'General'}</p>
                     <p style="margin:0;"><b>${t.modDocs}:</b> <span style="color:${docColor}; font-weight:bold;">${docStatus}</span></p>
                 </div>
